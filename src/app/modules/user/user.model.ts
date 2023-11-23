@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { Schema, model } from 'mongoose';
 import {
   TUser,
@@ -5,6 +6,8 @@ import {
   TUserFullName,
   TUserOrders,
 } from './user.interface';
+import bcrypt from 'bcrypt';
+import config from '../../config';
 
 const userFullNameSchema = new Schema<TUserFullName>({
   firstName: {
@@ -93,5 +96,27 @@ const userSchema = new Schema<TUser>({
     required: true,
   },
 });
+//using pre hook for password hashing
+userSchema.pre('save', async function (next) {
+  //hashing password
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
+
+//using post hook for password empty from the field
+userSchema.post('save', async function (doc, next) {
+  doc.password = '';
+  next();
+});
+//remove password field
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 export const UserModel = model<TUser>('User', userSchema);
