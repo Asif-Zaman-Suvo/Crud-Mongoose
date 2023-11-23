@@ -6,6 +6,14 @@ const createUserIntoDB = async (user: TUser) => {
   return result;
 };
 
+const getAllUserFromDB = async () => {
+  const result = await UserModel.find().select(
+    'username fullName.firstName fullName.lastName age email address.street address.city address.country',
+  );
+  return result;
+};
+
 export const UserServices = {
   createUserIntoDB,
+  getAllUserFromDB,
 };
