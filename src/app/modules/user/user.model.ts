@@ -5,6 +5,8 @@ import {
   TUserAddress,
   TUserFullName,
   TUserOrders,
+  UserMethods,
+  UserModel,
 } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
@@ -52,7 +54,7 @@ const userOrdersSchema = new Schema<TUserOrders>({
   },
 });
 
-const userSchema = new Schema<TUser>({
+const userSchema = new Schema<TUser, UserModel, UserMethods>({
   userId: {
     type: Number,
     required: [true, 'UserId is required'],
@@ -118,4 +120,9 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const UserModel = model<TUser>('User', userSchema);
+userSchema.methods.isUserExists = async function (userId: number) {
+  const existingUser = await User.findOne({ userId });
+  return existingUser;
+};
+
+export const User = model<TUser, UserModel>('User', userSchema);
