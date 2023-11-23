@@ -30,7 +30,7 @@ const getAllUserFromDB = async () => {
 const getSingleUserFromDB = async (userId: number) => {
   const result = await User.findOne({ userId }).select({
     userId: 1,
-    userName: 1,
+    username: 1,
     'fullName.firstName': 1,
     'fullName.lastName': 1,
     age: 1,
