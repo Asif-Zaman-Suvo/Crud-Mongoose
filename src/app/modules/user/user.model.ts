@@ -66,7 +66,6 @@ const userSchema = new Schema<TUser>({
   password: {
     type: String,
     required: [true, 'password is required'],
-    unique: true,
   },
   fullName: {
     type: userFullNameSchema,

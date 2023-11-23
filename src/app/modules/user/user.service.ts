@@ -21,8 +21,26 @@ const getAllUserFromDB = async () => {
   });
   return result;
 };
+//Get single user method
+const getSingleUserFromDB = async (userId: number) => {
+  const result = await UserModel.findOne({ userId }).select({
+    userId: 1,
+    userName: 1,
+    'fullName.firstName': 1,
+    'fullName.lastName': 1,
+    age: 1,
+    email: 1,
+    isActive: 1,
+    hobbies: 1,
+    'address.street': 1,
+    'address.city': 1,
+    'address.country': 1,
+  });
+  return result;
+};
 
 export const UserServices = {
   createUserIntoDB,
   getAllUserFromDB,
+  getSingleUserFromDB,
 };
