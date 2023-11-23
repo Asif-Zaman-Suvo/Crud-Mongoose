@@ -1,4 +1,4 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import {
   TUser,
   TUserAddress,
@@ -90,8 +90,8 @@ const userSchema = new Schema<TUser>({
   },
   orders: {
     type: [userOrdersSchema],
-    required: [true, 'orders details required'],
+    required: true,
   },
 });
 
-export const User = model<TUser>('User', userSchema);
+export const UserModel = model<TUser>('User', userSchema);
