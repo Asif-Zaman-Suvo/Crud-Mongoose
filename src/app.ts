@@ -10,7 +10,7 @@ app.use('/api', UserRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send(
-    'Welcome to Programming Hero level 2 course Assignment 2 , Student: Md Asifuzzaman Suvo',
+    'Welcome to Programming Hero level 2 course --- Assignment 2 , Student: Md Asifuzzaman Suvo',
   );
 });
 
