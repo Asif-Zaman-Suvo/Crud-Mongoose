@@ -52,10 +52,6 @@ const getSingleUserFromDB = async (userId: number) => {
 
 //update single user method
 const updateSingleUserFromDB = async (userId: number, userData: TUser) => {
-  const user = new User(userData);
-  if (!(await user.isUserExists(userData.userId))) {
-    throw new Error('User not found');
-  }
   //hashed password after getting the updated password
   if (userData && userData.password) {
     userData.password = await bcrypt.hash(
@@ -65,7 +61,21 @@ const updateSingleUserFromDB = async (userId: number, userData: TUser) => {
   }
   const result = await User.findOneAndUpdate({ userId }, userData, {
     new: true,
+    runValidators: true,
   });
+  if (!result) {
+    throw new Error('User not found');
+  }
+  return result;
+};
+
+//delete a user from the database
+
+const deleteSingleUserFromDB = async (userId: number) => {
+  const result = await User.find().deleteOne({ userId });
+  if (result.deletedCount === 0) {
+    throw new Error('User not found');
+  }
   return result;
 };
 
@@ -74,4 +84,5 @@ export const UserServices = {
   getAllUserFromDB,
   getSingleUserFromDB,
   updateSingleUserFromDB,
+  deleteSingleUserFromDB,
 };
