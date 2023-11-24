@@ -29,7 +29,6 @@ export type TUser = {
   address: TUserAddress;
   orders: TUserOrders[];
 };
-
 export type UserMethods = {
   // eslint-disable-next-line no-unused-vars
   isUserExists(id: number): Promise<TUser | null>;

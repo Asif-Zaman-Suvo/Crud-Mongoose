@@ -97,7 +97,7 @@ const userSchema = new Schema<TUser, UserModel, UserMethods>({
     required: true,
   },
 });
-//using pre hook for password hashing
+//using pre hook for password hashing when created user
 userSchema.pre('save', async function (next) {
   //hashing password
   const user = this;
