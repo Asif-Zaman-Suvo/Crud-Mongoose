@@ -8,10 +8,10 @@ app.use(cors());
 //application route
 app.use('/api', UserRoutes);
 
-const getAController = (req: Request, res: Response) => {
-  const a = 10;
-  res.send(a);
-};
-app.get('/', getAController);
+app.get('/', (req: Request, res: Response) => {
+  res.send(
+    'Welcome to Programming Hero level 2 course Assignment 2 , Student: Md Asifuzzaman Suvo',
+  );
+});
 
 export default app;
