@@ -46,7 +46,12 @@ const getSingleUserFromDB = async (userId: number) => {
   return result;
 };
 
+//update single user method
 const updateSingleUserFromDB = async (userId: number, userData: TUser) => {
+  const user = new User(userData);
+  if (!(await user.isUserExists(userData.userId))) {
+    throw new Error('User not found');
+  }
   //hashed password after getting the updated password
   if (userData && userData.password) {
     userData.password = await bcrypt.hash(

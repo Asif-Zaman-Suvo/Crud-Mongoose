@@ -74,10 +74,11 @@ const updateSingleUser = async (req: Request, res: Response) => {
       message: 'Users updated successfully!',
       data: result,
     });
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: 'User not found!',
+      message: error.message || 'User not found!',
       error: {
         code: 404,
         description: 'User not found!',
