@@ -43,7 +43,11 @@ const getSingleUserFromDB = async (userId: number) => {
     'address.city': 1,
     'address.country': 1,
   });
-  return result;
+  if (!result) {
+    throw new Error('User not found');
+  }
+  const singleUserData = result.toObject();
+  return singleUserData;
 };
 
 //update single user method

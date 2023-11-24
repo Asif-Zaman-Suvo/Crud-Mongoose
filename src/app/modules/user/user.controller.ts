@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
 
@@ -15,7 +16,10 @@ const createUser = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'User not found!',
-      error: error,
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
     });
   }
 };
@@ -28,10 +32,10 @@ const getAllUser = async (req: Request, res: Response) => {
       message: 'Users fetched successfully!',
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: 'User not found!',
+      message: error.message || 'User not found!',
       error: {
         code: 404,
         description: 'User not found!',
@@ -49,10 +53,10 @@ const getSingleUser = async (req: Request, res: Response) => {
       message: 'Users fetched successfully!',
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: 'User not found!',
+      message: error.message || 'User not found!',
       error: {
         code: 404,
         description: 'User not found!',

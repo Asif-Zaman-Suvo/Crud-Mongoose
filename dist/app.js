@@ -12,6 +12,6 @@ app.use((0, cors_1.default)());
 //application route
 app.use('/api', user_route_1.UserRoutes);
 app.get('/', (req, res) => {
-    res.send('Welcome to Programming Hero level 2 course Assignment 2 , Student: Md Asifuzzaman Suvo');
+    res.send('Welcome to Programming Hero level 2 course --- Assignment 2 , Student: Md Asifuzzaman Suvo');
 });
 exports.default = app;
