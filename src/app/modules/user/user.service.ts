@@ -1,5 +1,5 @@
 import config from '../../config';
-import { TUser } from './user.interface';
+import { TUpdateUser, TUser } from './user.interface';
 import { User } from './user.model';
 import bcrypt from 'bcrypt';
 
@@ -51,7 +51,10 @@ const getSingleUserFromDB = async (userId: number) => {
 };
 
 //update single user method
-const updateSingleUserFromDB = async (userId: number, userData: TUser) => {
+const updateSingleUserFromDB = async (
+  userId: number,
+  userData: TUpdateUser,
+) => {
   //hashed password after getting the updated password
   if (userData && userData.password) {
     userData.password = await bcrypt.hash(

@@ -72,11 +72,11 @@ const updateSingleUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
     const { user: userData } = req.body;
-    const zodParseData =
+    const updateZodParseData =
       userValidationSchema.updateUserValidationWithZodSchema.parse(userData);
     const result = await UserServices.updateSingleUserFromDB(
       Number(userId),
-      zodParseData,
+      updateZodParseData,
     );
     res.status(200).json({
       success: true,
