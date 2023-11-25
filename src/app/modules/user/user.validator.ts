@@ -33,7 +33,7 @@ const userValidationWithZodSchema = z.object({
 });
 
 const updateUserValidationWithZodSchema = z.object({
-  username: z.string().max(20).min(4),
+  username: z.string().max(20).min(4).optional(),
   password: z.string().max(20).min(4).optional(),
   fullName: userFullNameSchema.optional(),
   age: z.number().positive().optional(),

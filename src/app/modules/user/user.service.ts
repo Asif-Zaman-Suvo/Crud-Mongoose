@@ -1,5 +1,5 @@
 import config from '../../config';
-import { TUpdateUser, TUser } from './user.interface';
+import { TUpdateUser, TUser, TUserOrders } from './user.interface';
 import { User } from './user.model';
 import bcrypt from 'bcrypt';
 
@@ -82,10 +82,38 @@ const deleteSingleUserFromDB = async (userId: number) => {
   return result;
 };
 
+//update a order from the database
+const updateSingleUserOrderFromDB = async (
+  userId: number,
+  orderData: TUserOrders[],
+) => {
+  const result = await User.findOneAndUpdate(
+    { userId },
+    { $push: { orders: { $each: orderData } } },
+    { new: true, runValidators: true },
+  );
+  if (!result) {
+    throw new Error('User not found');
+  }
+  return result;
+};
+
+const getAllOrderfromSingleUser = async (userId: number) => {
+  const result = await User.findOne({ userId }).select({
+    orders: 1,
+  });
+  if (!result) {
+    throw new Error('User not found');
+  }
+  return result.orders || [];
+};
+
 export const UserServices = {
   createUserIntoDB,
   getAllUserFromDB,
   getSingleUserFromDB,
   updateSingleUserFromDB,
   deleteSingleUserFromDB,
+  updateSingleUserOrderFromDB,
+  getAllOrderfromSingleUser,
 };
