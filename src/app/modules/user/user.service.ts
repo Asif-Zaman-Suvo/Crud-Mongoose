@@ -98,14 +98,51 @@ const updateSingleUserOrderFromDB = async (
   return result;
 };
 
-const getAllOrderfromSingleUser = async (userId: number) => {
+const getAllOrderfromSingleUserFromDB = async (userId: number) => {
   const result = await User.findOne({ userId }).select({
     orders: 1,
   });
   if (!result) {
     throw new Error('User not found');
   }
-  return result.orders || [];
+  if (!result.orders || result.orders.length === 0) {
+    throw new Error('Order not found');
+  }
+  return result.orders;
+};
+
+const getTotalPriceOfSpecificUserOrderFromDB = async (userId: number) => {
+  const result = await User.aggregate([
+    {
+      $match: { userId },
+    },
+    {
+      $unwind: '$orders',
+    },
+    {
+      $group: {
+        _id: null,
+        totalCalculatedPrice: {
+          $sum: {
+            $multiply: ['$orders.price', '$orders.quantity'],
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        totalCalculatedPrice: 1,
+      },
+    },
+  ]);
+
+  if (result.length === 0 || result[0].totalCalculatedPrice === undefined) {
+    throw new Error(
+      'This user have no order . please orders something before visit this page.',
+    );
+  }
+  return result[0].totalCalculatedPrice;
 };
 
 export const UserServices = {
@@ -115,5 +152,6 @@ export const UserServices = {
   updateSingleUserFromDB,
   deleteSingleUserFromDB,
   updateSingleUserOrderFromDB,
-  getAllOrderfromSingleUser,
+  getAllOrderfromSingleUserFromDB,
+  getTotalPriceOfSpecificUserOrderFromDB,
 };
