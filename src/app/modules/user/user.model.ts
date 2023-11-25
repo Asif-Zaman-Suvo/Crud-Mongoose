@@ -119,7 +119,7 @@ userSchema.methods.toJSON = function () {
   delete obj.password;
   return obj;
 };
-
+//use instance method to check if the user exists or not
 userSchema.methods.isUserExists = async function (userId: number) {
   const existingUser = await User.findOne({ userId });
   return existingUser;

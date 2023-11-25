@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
+import { userValidationSchema } from './user.validator';
 
 const createUser = async (req: Request, res: Response) => {
   try {
     const { user: userData } = req.body;
-    const result = await UserServices.createUserIntoDB(userData);
+    const zodParseData =
+      userValidationSchema.userValidationWithZodSchema.parse(userData);
+    const result = await UserServices.createUserIntoDB(zodParseData);
     res.status(200).json({
       success: true,
       message: 'User created successfully!',
@@ -69,9 +72,11 @@ const updateSingleUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
     const { user: userData } = req.body;
+    const zodParseData =
+      userValidationSchema.updateUserValidationWithZodSchema.parse(userData);
     const result = await UserServices.updateSingleUserFromDB(
       Number(userId),
-      userData,
+      zodParseData,
     );
     res.status(200).json({
       success: true,

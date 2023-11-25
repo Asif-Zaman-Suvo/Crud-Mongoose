@@ -27,7 +27,7 @@ export type TUser = {
   isActive: boolean;
   hobbies: string[];
   address: TUserAddress;
-  orders: TUserOrders[];
+  orders?: TUserOrders[];
 };
 export type UserMethods = {
   // eslint-disable-next-line no-unused-vars
