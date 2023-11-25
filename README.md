@@ -6,19 +6,19 @@ This project refers to the implementation of crud with mongoose , typescript , m
 
 ## Features of this project
 
-=> We can create , read , update and delete an users from the database
-=> Add new products into the database with orders property
-=> We can also see the all orders result from a specific users
-=> Finally we calculate the total price of orders for a specific user
+- We can create , read , update and delete an users from the database
+- Add new products into the database with orders property
+- We can also see the all orders result from a specific users
+- Finally we calculate the total price of orders for a specific user
 
 ## Technologies I've used in this project
 
-=> NodeJS , A javascipt runtine environment
-=> ExpressJS the framwo
-=> TypeScript: Superset of JavaScript with static typing
-=> MongoDB: NoSQL database
-=> Mongoose: Object Document Mapper (ODM) for MongoDB
-=> Data validation libraries like ZOD
+- NodeJS , A javascipt runtine environment
+- ExpressJS the framwo
+- TypeScript: Superset of JavaScript with static typing
+- MongoDB: NoSQL database
+- Mongoose: Object Document Mapper (ODM) for MongoDB
+- Data validation libraries like ZOD
 
 ## Installation and Setup
 
