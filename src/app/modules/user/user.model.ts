@@ -5,7 +5,6 @@ import {
   TUserAddress,
   TUserFullName,
   TUserOrders,
-  UserMethods,
   UserModel,
 } from './user.interface';
 import bcrypt from 'bcrypt';
@@ -54,7 +53,7 @@ const userOrdersSchema = new Schema<TUserOrders>({
   },
 });
 
-const userSchema = new Schema<TUser, UserModel, UserMethods>({
+const userSchema = new Schema<TUser, UserModel>({
   userId: {
     type: Number,
     required: [true, 'UserId is required'],
@@ -119,8 +118,8 @@ userSchema.methods.toJSON = function () {
   delete obj.password;
   return obj;
 };
-//use instance method to check if the user exists or not
-userSchema.methods.isUserExists = async function (userId: number) {
+//use statics method to check if the user exists or not
+userSchema.statics.isUserExists = async function (userId: number) {
   const existingUser = await User.findOne({ userId });
   return existingUser;
 };

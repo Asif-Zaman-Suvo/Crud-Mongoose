@@ -41,9 +41,13 @@ export type TUpdateUser = {
   address?: TUserAddress;
   orders?: TUserOrders[];
 };
-export type UserMethods = {
-  // eslint-disable-next-line no-unused-vars
-  isUserExists(id: number): Promise<TUser | null>;
-};
 
-export type UserModel = Model<TUser, Record<string, never>, UserMethods>;
+export interface UserModel extends Model<TUser> {
+  isUserExists(userId: number): Promise<TUser | null>;
+}
+// export type UserMethods = {
+//   // eslint-disable-next-line no-unused-vars
+//   isUserExists(userId: number): Promise<TUser | null>;
+// };
+
+// export type UserModel = Model<TUser, Record<string, never>, UserMethods>;

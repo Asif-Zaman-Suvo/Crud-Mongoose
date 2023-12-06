@@ -5,12 +5,10 @@ import bcrypt from 'bcrypt';
 
 //create a new user method
 const createUserIntoDB = async (userData: TUser) => {
-  // const result = await User.create(user);
-  const user = new User(userData);
-  if (await user.isUserExists(userData.userId)) {
+  if (await User.isUserExists(userData.userId)) {
     throw new Error('User already exists');
   }
-  const result = await user.save();
+  const result = await User.create(userData);
   return result;
 };
 
